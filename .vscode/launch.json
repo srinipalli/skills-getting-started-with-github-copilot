@@ -1,21 +1,43 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Mergington WebApp",
+      "name": "Launch FastAPI Server",
       "type": "debugpy",
       "request": "launch",
       "module": "uvicorn",
       "args": [
         "src.app:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8000",
         "--reload",
         "--reload-include",
         "src/static/*"
       ],
       "jinja": true
+    },
+    {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Launch Full Stack (Server + Browser)",
+      "type": "chrome",
+      "request": "attach",
+      "preLaunchTask": "Launch FastAPI Server",
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceFolder}"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Stack Debug",
+      "configurations": ["Launch FastAPI Server", "Launch Chrome"]
     }
   ]
 }
